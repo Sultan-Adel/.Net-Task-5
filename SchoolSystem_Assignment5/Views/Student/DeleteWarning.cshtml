@@ -1,0 +1,21 @@
+@model SchoolSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Delete Warning";
+}
+
+<div class="alert alert-danger mt-3" role="alert">
+    <h4 class="alert-heading">Warning! Confirm Student Deletion</h4>
+    <p>Are you sure you want to permanently delete this student? This action cannot be undone.</p>
+    <hr />
+    <p class="mb-1"><strong>ID:</strong> @Model.Id</p>
+    <p class="mb-1"><strong>Name:</strong> @Model.Name</p>
+    <p class="mb-1"><strong>Age:</strong> @Model.Age</p>
+    <p class="mb-0"><strong>Department:</strong> @Model.Department?.Name</p>
+</div>
+
+<form asp-controller="Student" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" class="d-flex gap-2">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Yes, Delete Student</button>
+    <a asp-controller="Student" asp-action="GetAll" class="btn btn-secondary">Cancel</a>
+</form>

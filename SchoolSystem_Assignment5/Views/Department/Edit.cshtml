@@ -1,0 +1,41 @@
+@model SchoolSystem.ViewModels.DepartmentFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Department";
+}
+
+<h2>Edit Department</h2>
+
+<form asp-controller="Department" asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MgrName" class="form-label"></label>
+        <input asp-for="MgrName" class="form-control" />
+        <span asp-validation-for="MgrName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ParentDepartmentId" class="form-label"></label>
+        <select asp-for="ParentDepartmentId" asp-items="Model.ExistingDepartments" class="form-select">
+            <option value="">-- Select Reference Department (Optional) --</option>
+        </select>
+        <span asp-validation-for="ParentDepartmentId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-warning">Update Department</button>
+    <a asp-controller="Department" asp-action="ShowAll" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

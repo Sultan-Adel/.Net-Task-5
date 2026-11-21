@@ -1,0 +1,52 @@
+@model SchoolSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<h2>Student Details</h2>
+
+<div class="card mb-4 mt-3">
+    <div class="card-body">
+        <p><strong>ID:</strong> @Model.Id</p>
+        <p><strong>Name:</strong> @Model.Name</p>
+        <p><strong>Age:</strong> @Model.Age</p>
+        <p><strong>Department:</strong> @Model.Department?.Name (Manager: @Model.Department?.MgrName)</p>
+    </div>
+</div>
+
+<h4>Courses &amp; Grades</h4>
+@if (Model.StuCrsRes != null && Model.StuCrsRes.Any())
+{
+    <table class="table table-bordered mt-2">
+        <thead class="table-light">
+            <tr>
+                <th>Course Name</th>
+                <th>Grade</th>
+                <th>Min Degree</th>
+                <th>Max Degree</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.StuCrsRes)
+            {
+                <tr>
+                    <td>@item.Course?.Name</td>
+                    <td>@item.Grade</td>
+                    <td>@item.Course?.MinDegree</td>
+                    <td>@item.Course?.Degree</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No courses registered for this student.</p>
+}
+
+<div class="d-flex gap-2 mt-3">
+    <a asp-controller="Student" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-controller="Student" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+    <a asp-controller="Student" asp-action="GetAll" class="btn btn-secondary">Back to Students</a>
+</div>

@@ -1,0 +1,111 @@
+@model SchoolSystem.ViewModels.StudentListViewModel
+
+@{
+    Layout = "_CustomTemplateLayout";
+    ViewData["Title"] = "All Students";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>All Students</h2>
+    <a asp-controller="Student" asp-action="Add" class="btn btn-success">Add New Student</a>
+</div>
+
+<form asp-controller="Student" asp-action="GetAll" method="get" class="row g-3 mb-4">
+    <div class="col-md-5">
+        <input type="text"
+               name="searchName"
+               value="@Model.SearchName"
+               class="form-control"
+               placeholder="Search student by name..." />
+    </div>
+    <div class="col-md-4">
+        <select name="departmentId" asp-items="Model.Departments" class="form-select">
+            <option value="">-- All Departments --</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-controller="Student" asp-action="GetAll" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Students.Any())
+        {
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>@student.Age</td>
+                    <td>@student.Department?.Name</td>
+                    <td class="d-flex gap-1">
+                        <a asp-controller="Student" asp-action="GetById" asp-route-id="@student.Id" class="btn btn-sm btn-info text-white">Details</a>
+                        <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted">No students found matching the criteria.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Students pagination">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-controller="Student"
+                   asp-action="GetAll"
+                   asp-route-searchName="@Model.SearchName"
+                   asp-route-departmentId="@Model.DepartmentId"
+                   asp-route-pageNumber="@(Model.PageNumber - 1)"
+                   asp-route-pageSize="@Model.PageSize">Previous</a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link"
+                       asp-controller="Student"
+                       asp-action="GetAll"
+                       asp-route-searchName="@Model.SearchName"
+                       asp-route-departmentId="@Model.DepartmentId"
+                       asp-route-pageNumber="@i"
+                       asp-route-pageSize="@Model.PageSize">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-controller="Student"
+                   asp-action="GetAll"
+                   asp-route-searchName="@Model.SearchName"
+                   asp-route-departmentId="@Model.DepartmentId"
+                   asp-route-pageNumber="@(Model.PageNumber + 1)"
+                   asp-route-pageSize="@Model.PageSize">Next</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<p class="text-muted text-center">
+    Showing page @Model.PageNumber of @Model.TotalPages (Total Students: @Model.TotalCount)
+</p>

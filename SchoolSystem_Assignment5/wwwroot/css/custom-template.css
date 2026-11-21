@@ -1,0 +1,77 @@
+/* Custom Dashboard Template Stylesheet (EduAdmin Pro Theme) */
+:root {
+    --sidebar-bg: #1e293b;
+    --sidebar-hover: #334155;
+    --accent-color: #2563eb;
+    --bg-light: #f1f5f9;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.template-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.template-sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.template-sidebar .brand {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+.template-sidebar .nav-link {
+    color: #cbd5e1;
+    padding: 0.75rem 1.5rem;
+    display: block;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.template-sidebar .nav-link:hover,
+.template-sidebar .nav-link.active {
+    background-color: var(--sidebar-hover);
+    color: #fff;
+    border-left: 4px solid var(--accent-color);
+}
+
+.template-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.template-topbar {
+    background-color: #fff;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.template-content {
+    padding: 1.75rem;
+    flex-grow: 1;
+}
+
+.template-footer {
+    background-color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.875rem;
+}
